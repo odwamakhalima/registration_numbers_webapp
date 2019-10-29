@@ -7,4 +7,4 @@ env:
   - DATABASE_URL=postgresql://postgres@localhost:5432/register
 before_script:
   - psql -c 'CREATE DATABASE register;' -U postgres
-  - psql -U postgres -d register -a -f reg.sql
+  - psql -U postgres -d register -a reg.sql
