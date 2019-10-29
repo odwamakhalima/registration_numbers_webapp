@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="registration_number.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="center">
+    <form action="/reg_numbers" method="POST">
+      <div><img src="giphy.gif"></div>
+      <div class="error">
+        {{messages.error}}
+      </div>
+      <div class="center">
+        <label id="name">Enter Registration Number:</label><br>
+        <input type="text" name="town" value="" id="item" class="myText" onfocus="this.value=''"
+          style="width:300px;height:35px;font-size: larger;" placeholder="e.g CA 126"><br>
+        <div style="padding: 1em;">
+          <button button id="button" type="submit" class="button-primary addBtn" style="width:106px;">Add</button>
+        </div>
+
+
+      </div>
+
+      <div class="dropdown">
+        <select id="regMy" name="myReg">
+          <option value="" name='regTowns'>Show All</option>
+          <option value="CA" name='regTowns'>Cape Town</option>
+          <option value="CY" name='regTowns'>Bellville</option>
+          <option value="CL" name='regTowns'>Stellenbosch</option>
+        </select>
+
+      </div>
+      <div style="padding: 1em;">
+        <button button id="button" type="submit" class="button-primary showBtn">Show Registration</button>
+      </div>
+    </form>
+
+    
+
+    <section id="regShow">
+      <div id="regNumbers"></div><br>
+      <ul>
+       
+        {{#each show}}
+
+        <li>{{this}}</li>
+
+        {{/each}}
+      </ul><br>
+
+    </section>
+
+
+
+    {{!-- <table>
+    <tr>
+        <td>Registations</td>
+    </tr>
+    {{#each showLoc}}
+    <tr>
+        <td>{{description}}</td>
+    </tr>
+    {{/each}}
+</table> --}}
+
+
+  </div>
+
+</body>
+<script src="../regFact.js"></script>
+
+</html>
