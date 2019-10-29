@@ -10,7 +10,7 @@ var routings = require('./reg-routes')
 const pg = require("pg");
 const Pool = pg.Pool;
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:codex123@localhost/register';
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:codex123@localhost:5432/register';
 
 const pool = new Pool({
     connectionString
@@ -48,7 +48,7 @@ app.get('/', routingFact.indexs)
 app.post('/reg_numbers', routingFact.postData)
 
 
-var PORT = process.env.PORT || 5016
+var PORT = process.env.PORT || 5017
 
 app.listen(PORT, function () {
     console.log('server', PORT)
