@@ -29,13 +29,13 @@ module.exports = function regFact(pool) {
                 }
 
                 if (reg2.startsWith('CA ')) {
-                   // await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
+                    await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
                     linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
                     
                 }
 
                 if (reg2.startsWith('CY ')) {
-                   // await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
+                    await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
                     linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
                     
                 }
