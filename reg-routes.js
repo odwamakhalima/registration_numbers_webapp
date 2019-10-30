@@ -5,7 +5,7 @@ module.exports = function regRoute(factoryReg){
     var regtown;
 
     async function indexs(req,res){
-        console.log(await factoryReg.checking());
+        //console.log(await factoryReg.checking());
         
         res.render('index',{
              show: regtown,

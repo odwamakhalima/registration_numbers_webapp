@@ -25,6 +25,8 @@ module.exports = function regFact(pool) {
                 if (reg2.startsWith('CL ')) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 3]);
                     linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
+                    console.log(linkTables1.rows);
+                    
                     
                 }
 

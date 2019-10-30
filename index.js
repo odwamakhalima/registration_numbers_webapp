@@ -48,7 +48,7 @@ app.get('/', routingFact.indexs)
 app.post('/reg_numbers', routingFact.postData)
 
 
-var PORT = process.env.PORT || 5017
+var PORT = process.env.PORT || 5030
 
 app.listen(PORT, function () {
     console.log('server', PORT)
