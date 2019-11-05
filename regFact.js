@@ -19,8 +19,6 @@ module.exports = function regFact(pool) {
         if (reg2.length > 0 && reg2.length <= 10 && myTest == false) {
             if (reg2.startsWith('CA ') || reg2.startsWith('CY ') || reg2.startsWith('CL ')) {
                 store = await pool.query('select * from myregnumbers WHERE description = $1', [reg2])
-                console.log(store.rowCount);
-                
                 
             
                 if (regList[reg2] === undefined){

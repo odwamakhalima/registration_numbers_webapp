@@ -2,6 +2,7 @@ module.exports = function regRoute(factoryReg) {
 
     var regex = /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
     var regtown;
+    var regDrop
 
     async function indexs(req, res) {
 
@@ -17,7 +18,6 @@ module.exports = function regRoute(factoryReg) {
 
        var dup = await factoryReg.duplicates();
 
-
         var reg = req.body.town
         var myTest = regex.test(reg);
         if (reg.length <= 10 && myTest == false) {
@@ -29,8 +29,10 @@ module.exports = function regRoute(factoryReg) {
                 req.flash('error2', 'Added The Registration')
             }
         }
+        else{
+            req.flash('error', 'Enter A Correct Location')
+        }
     }
-
         
         if (myTest == true) {
             req.flash('error', 'Registration Number Is Not Valid')
@@ -45,7 +47,7 @@ module.exports = function regRoute(factoryReg) {
 
     function filts(req, res) {
 
-        var regDrop = req.body.myReg
+        regDrop = req.body.myReg
 
         regtown = Object.keys(factoryReg.theReg(regDrop));
         for (var i = 0; i < regtown.length; i++) {
@@ -62,3 +64,4 @@ module.exports = function regRoute(factoryReg) {
         filts
     }
 }
+
