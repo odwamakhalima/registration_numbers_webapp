@@ -12,11 +12,14 @@ const pool = new Pool({
 describe('The basic database web app', function () {
     beforeEach(async function () {
         await pool.query("delete from myregnumbers;");
+        // await pool.query('insert into mytowns (description) values (CA)')
+        // await pool.query('insert into mytowns (description) values (CY)')
+        // await pool.query('insert into mytowns (description) values (CL)')
     });
 
     it('should filter each location and store values in different list', async function () {
 
-        
+
 
         const factoryReg = registration(pool)
         await factoryReg.stored('CA 8734')

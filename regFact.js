@@ -15,9 +15,10 @@ module.exports = function regFact(pool) {
     async function stored(regs) {
         var reg2 = regs.toUpperCase().trim()
         var myTest = regex.test(reg2);
+        check = await pool.query('select distinct description, mytowns_id from myregnumbers')
         if (reg2.length > 0 && reg2.length <= 10 && myTest == false) {
             if (reg2.startsWith('CA ') || reg2.startsWith('CY ') || reg2.startsWith('CL ')) {
-                check = await pool.query('select distinct description, mytowns_id from myregnumbers')
+                
                 if (regList[reg2] === undefined){
                     regList[reg2] = 0;
                 }
@@ -26,8 +27,6 @@ module.exports = function regFact(pool) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 3]);
                     linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
                    
-                    
-                    
                 }
 
                 if (reg2.startsWith('CA ')) {
@@ -79,23 +78,9 @@ module.exports = function regFact(pool) {
 
     }
 
-
-    function show() {
-        var str = regList
-        var loc = Object.keys(str)
-        for (var j = 0; j < loc.length; j++) {
-            var final = loc[j]
-            return final
-        }
-
-    }
-
-
-
     return {
         stored,
         theReg,
-        show,
         newObj,
         checking,
         linking1,
