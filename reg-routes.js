@@ -14,6 +14,7 @@ module.exports = function regRoute(factoryReg) {
     }
 
     async function postData(req, res) {
+     
         await factoryReg.stored(req.body.town)
 
        var dup = await factoryReg.duplicates();
@@ -33,18 +34,19 @@ module.exports = function regRoute(factoryReg) {
             req.flash('error', 'Enter A Correct Location')
         }
     }
-        
+    
         if (myTest == true) {
             req.flash('error', 'Registration Number Is Not Valid')
         }
 
         if (reg.length <= 0) {
             req.flash('error', 'Please Enter A Registration Number')
-        }
-
-        res.redirect('/')
+    
     }
 
+        res.redirect('/')
+    
+    }
     function filts(req, res) {
 
         regDrop = req.body.myReg
@@ -58,10 +60,19 @@ module.exports = function regRoute(factoryReg) {
         res.redirect('/')
     }
 
+   async function resets(req,res){
+       
+            await factoryReg.resetBtn()
+        
+        res.redirect('/')
+    }
+
     return {
         indexs,
         postData,
-        filts
+        filts,
+        resets
+
     }
 }
 

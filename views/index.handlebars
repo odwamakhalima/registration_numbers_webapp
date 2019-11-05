@@ -44,14 +44,19 @@
       </div>
       <div style="padding: 1em;">
         <button id="button" type="submit" class="button-primary showBtn">Show Registration</button>
+
       </div>
 
     </form>
 
+    {{!-- <form action="/reset" method="post">
+      <button id="button" type="submit" class="button-primary resetBtn" value="reset" name="but">Reset
+        Registrations</button>
+    </form> --}}
+
     <section id="regShow">
       <div id="regNumbers"></div><br>
       <ul>
-
         {{#each show}}
 
         <li>{{this}}</li>

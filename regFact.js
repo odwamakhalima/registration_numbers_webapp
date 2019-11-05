@@ -82,6 +82,10 @@ module.exports = function regFact(pool) {
 
     }
 
+   async function resetBtn(){
+        await pool.query('DELETE from myregnumbers')
+    }
+    
     return {
         stored,
         theReg,
@@ -90,7 +94,8 @@ module.exports = function regFact(pool) {
         linking1,
         linking2,
         linking3,
-        duplicates
+        duplicates,
+        resetBtn
     }
 }
 
