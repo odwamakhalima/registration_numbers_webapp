@@ -1,17 +1,17 @@
 module.exports = function regRoute(factoryReg) {
 
     var regex = /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
-    var regtown;
+   
     var regDrop
 
     async function indexs(req, res) {
 
         res.render('index', {
-            show: regtown,
-            showLoc: factoryReg.checking(),
+            show: await factoryReg.finalResults(),
 
         })
     }
+
 
     async function postData(req, res) {
      
@@ -45,17 +45,32 @@ module.exports = function regRoute(factoryReg) {
     }
 
         res.redirect('/')
-    
     }
-    function filts(req, res) {
+   async function filts(req, res) {
 
         regDrop = req.body.myReg
 
-        regtown = Object.keys(factoryReg.theReg(regDrop));
-        for (var i = 0; i < regtown.length; i++) {
-            finale = regtown[i]
-
+        if(regDrop === ''){
+            await factoryReg.checking()
         }
+
+        if(regDrop === 'CA'){
+            await factoryReg.linking2()
+        }
+
+        if(regDrop === 'CY'){
+            await factoryReg.linking3()
+          
+            
+        }
+        if(regDrop === 'CL'){
+            await factoryReg.linking1()
+        }
+
+        // regtown = Object.keys(factoryReg.theReg(regDrop));
+        // for (var i = 0; i < regtown.length; i++) {
+        //     finale = regtown[i]
+        // }
 
         res.redirect('/')
     }

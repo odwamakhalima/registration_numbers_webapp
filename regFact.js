@@ -1,7 +1,8 @@
 module.exports = function regFact(pool) {
     var regList = {};
+    var final = [];
     var error = ''
-    var regex =  /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
+    var regex = /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
     var check;
     var linkTables1;
     var linkTables2;
@@ -19,9 +20,9 @@ module.exports = function regFact(pool) {
         if (reg2.length > 0 && reg2.length <= 10 && myTest == false) {
             if (reg2.startsWith('CA ') || reg2.startsWith('CY ') || reg2.startsWith('CL ')) {
                 store = await pool.query('select * from myregnumbers WHERE description = $1', [reg2])
-                
-            
-                if (regList[reg2] === undefined){
+
+
+                if (regList[reg2] === undefined) {
                     regList[reg2] = 0;
                     check = await pool.query('select distinct description, mytowns_id from myregnumbers')
                 }
@@ -29,19 +30,19 @@ module.exports = function regFact(pool) {
                 if (reg2.startsWith('CL ')) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 3]);
                     linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
-                   
+
                 }
 
                 else if (reg2.startsWith('CA ')) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
                     linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
-                    
+
                 }
 
                 else if (reg2.startsWith('CY ')) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
                     linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
-                    
+
                 }
             }
         }
@@ -49,25 +50,34 @@ module.exports = function regFact(pool) {
 
     async function linking1() {
         linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
-        return linkTables1.rows
+        final = linkTables1.rows
     }
 
     async function linking2() {
-        return linkTables2.rows
+        linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
+        final = linkTables2.rows
+        
     }
 
     async function linking3() {
-        return linkTables3.rows
+        linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
+        final = linkTables3.rows
+        
     }
-    
-    async function duplicates(){
+
+    async function duplicates() {
         return store.rowCount
     }
 
     async function checking() {
         check = await pool.query('select distinct description, mytowns_id from myregnumbers')
+        final = check.rows
+    }
+
+    async function finalResults() {
+     
         
-        return check.rows
+        return final
     }
 
     function theReg(first) {
@@ -82,10 +92,6 @@ module.exports = function regFact(pool) {
 
     }
 
-   async function resetBtn(){
-        await pool.query('DELETE from myregnumbers')
-    }
-    
     return {
         stored,
         theReg,
@@ -95,7 +101,7 @@ module.exports = function regFact(pool) {
         linking2,
         linking3,
         duplicates,
-        resetBtn
+        finalResults
     }
 }
 
