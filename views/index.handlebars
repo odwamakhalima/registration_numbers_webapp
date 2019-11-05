@@ -21,11 +21,14 @@
         <input type="text" name="town" value="" id="item" class="myText" onfocus="this.value=''"
           style="width:300px;height:35px;font-size: larger;" placeholder="e.g CA 126"><br>
         <div style="padding: 1em;">
-          <button button id="button" type="submit" class="button-primary addBtn" style="width:106px;">Add</button>
+          <button id="button" type="submit" class="button-primary addBtn" style="width:106px;">Add</button>
         </div>
 
-
       </div>
+
+    </form>
+
+    <form action="/filter" method="POST">
 
       <div class="dropdown">
         <select id="regMy" name="myReg">
@@ -37,16 +40,15 @@
 
       </div>
       <div style="padding: 1em;">
-        <button button id="button" type="submit" class="button-primary showBtn">Show Registration</button>
+        <button id="button" type="submit" class="button-primary showBtn">Show Registration</button>
       </div>
-    </form>
 
-    
+    </form>
 
     <section id="regShow">
       <div id="regNumbers"></div><br>
       <ul>
-       
+
         {{#each show}}
 
         <li>{{this}}</li>
@@ -55,7 +57,6 @@
       </ul><br>
 
     </section>
-
 
 
     {{!-- <table>
@@ -73,6 +74,6 @@
   </div>
 
 </body>
-<script src="../regFact.js"></script>
+{{!-- <script src="../regFact.js"></script> --}}
 
 </html>

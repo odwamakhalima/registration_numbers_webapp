@@ -42,13 +42,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-
 app.get('/', routingFact.indexs)
 
-app.post('/reg_numbers', routingFact.postData)
+app.post('/reg_numbers/', routingFact.postData)
 
 
-var PORT = process.env.PORT || 5030
+
+app.post('/filter', routingFact.filts)
+
+
+var PORT = process.env.PORT || 5042
 
 app.listen(PORT, function () {
     console.log('server', PORT)
