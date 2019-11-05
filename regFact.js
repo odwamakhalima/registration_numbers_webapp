@@ -1,12 +1,12 @@
 module.exports = function regFact(pool) {
     var regList = {};
     var error = ''
-    var regex = /[a-zA-Z0-9]+/g
+    var regex =  /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
     var check;
     var linkTables1;
     var linkTables2;
     var linkTables3;
-
+    var store;
 
     function newObj() {
         var myKeys = Object.keys(regList)
@@ -15,13 +15,17 @@ module.exports = function regFact(pool) {
     async function stored(regs) {
         var reg2 = regs.toUpperCase().trim()
         var myTest = regex.test(reg2);
-        check = await pool.query('select distinct description, mytowns_id from myregnumbers')
-        if (reg2.length > 0 && reg2.length <= 10 && myTest == true) {
+
+        if (reg2.length > 0 && reg2.length <= 10 && myTest == false) {
             if (reg2.startsWith('CA ') || reg2.startsWith('CY ') || reg2.startsWith('CL ')) {
+                store = await pool.query('select * from myregnumbers WHERE description = $1', [reg2])
+                console.log(store.rowCount);
                 
                 
+            
                 if (regList[reg2] === undefined){
                     regList[reg2] = 0;
+                    check = await pool.query('select distinct description, mytowns_id from myregnumbers')
                 }
 
                 if (reg2.startsWith('CL ')) {
@@ -45,7 +49,6 @@ module.exports = function regFact(pool) {
         }
     }
 
-
     async function linking1() {
         linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
         return linkTables1.rows
@@ -58,9 +61,14 @@ module.exports = function regFact(pool) {
     async function linking3() {
         return linkTables3.rows
     }
+    
+    async function duplicates(){
+        return store.rowCount
+    }
 
     async function checking() {
         check = await pool.query('select distinct description, mytowns_id from myregnumbers')
+        
         return check.rows
     }
 
@@ -76,29 +84,15 @@ module.exports = function regFact(pool) {
 
     }
 
-
-    function show() {
-        var str = regList
-        var loc = Object.keys(str)
-        for (var j = 0; j < loc.length; j++) {
-            var final = loc[j]
-            return final
-        }
-
-    }
-
-
-
     return {
         stored,
         theReg,
-        show,
         newObj,
         checking,
         linking1,
         linking2,
         linking3,
-    
+        duplicates
     }
 }
 
