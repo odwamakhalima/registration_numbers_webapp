@@ -61,7 +61,6 @@ module.exports = function regRoute(factoryReg) {
         if(regDrop === 'CY'){
             await factoryReg.linking3()
           
-            
         }
         if(regDrop === 'CL'){
             await factoryReg.linking1()

@@ -80,6 +80,7 @@ module.exports = function regFact(pool) {
     }
 
     async function resetBtn() {
+        final = []
         var restart = await pool.query('delete from myregnumbers')
         return restart
         

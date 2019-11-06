@@ -80,7 +80,7 @@ describe('The basic database web app', function () {
 
         await factoryReg.linking2()
         assert.deepEqual(await factoryReg.finalResults(), [{ description: 'CA 45876' }])
-        
+
         await factoryReg.linking3()
         assert.deepEqual(await factoryReg.finalResults(), [{ description: 'CY 2568' }])
 
