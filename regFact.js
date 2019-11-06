@@ -21,7 +21,7 @@ module.exports = function regFact(pool) {
             if (reg2.startsWith('CA ') || reg2.startsWith('CY ') || reg2.startsWith('CL ')) {
                 store = await pool.query('select * from myregnumbers WHERE description = $1', [reg2])
 
-
+if(store.rows.length === 0){
                 if (regList[reg2] === undefined) {
                     regList[reg2] = 0;
                     check = await pool.query('select distinct description, mytowns_id from myregnumbers')
@@ -33,19 +33,20 @@ module.exports = function regFact(pool) {
 
                 }
 
-                else if (reg2.startsWith('CA ')) {
+                if (reg2.startsWith('CA ')) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
                     linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
 
                 }
 
-                else if (reg2.startsWith('CY ')) {
+                if (reg2.startsWith('CY ')) {
                     await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
                     linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
 
                 }
             }
         }
+    }
     }
 
     async function linking1() {

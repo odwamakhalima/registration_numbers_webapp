@@ -1,4 +1,6 @@
+// var factoryReg2 = require('./regFact.js')
 module.exports = function regRoute(factoryReg) {
+
 
     var regex = /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
    
