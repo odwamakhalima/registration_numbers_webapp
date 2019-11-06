@@ -14,66 +14,71 @@ module.exports = function regRoute(factoryReg) {
 
 
     async function postData(req, res) {
-     
-        await factoryReg.stored(req.body.town)
+        if (req.body.but === 'reset') {
+            await factoryReg.resetBtn()
+            req.flash('error2', 'The Data Has Been Deleted')
 
-       var dup = await factoryReg.duplicates();
+        }
+        else {
 
-        var reg = req.body.town
-        var myTest = regex.test(reg);
-        if (reg.length <= 10 && myTest == false) {
-            if (reg.startsWith('ca ') || reg.startsWith('cy ') || reg.startsWith('cl ') || reg.startsWith('CA ') || reg.startsWith('CY ') || reg.startsWith('CL ')) {
-                if(dup >=1){
-                    req.flash('error','Already Been Added')
+            await factoryReg.stored(req.body.town)
+
+            var dup = await factoryReg.duplicates();
+
+            var reg = req.body.town
+            var myTest = regex.test(reg);
+            if (reg.length <= 10 && myTest == false) {
+                if (reg.startsWith('ca ') || reg.startsWith('cy ') || reg.startsWith('cl ') || reg.startsWith('CA ') || reg.startsWith('CY ') || reg.startsWith('CL ')) {
+                    if (dup >= 1) {
+                        req.flash('error', 'Already Been Added')
+                    }
+                    else {
+                        req.flash('error2', 'Added The Registration')
+                    }
+                }
+                else {
+                    req.flash('error', 'Enter A Correct Location')
+                }
             }
-            else{
-                req.flash('error2', 'Added The Registration')
+
+            if (myTest == true) {
+                req.flash('error', 'Registration Number Is Not Valid')
+            }
+
+            if (reg.length <= 0) {
+                req.flash('error', 'Please Enter A Registration Number')
+
             }
         }
-        else{
-            req.flash('error', 'Enter A Correct Location')
-        }
-    }
-    
-        if (myTest == true) {
-            req.flash('error', 'Registration Number Is Not Valid')
-        }
-
-        if (reg.length <= 0) {
-            req.flash('error', 'Please Enter A Registration Number')
-    
-    }
-
         res.redirect('/')
     }
-   async function filts(req, res) {
+    async function filts(req, res) {
+
 
         regDrop = req.body.myReg
 
-        if(regDrop === ''){
+        if (regDrop === '') {
             await factoryReg.checking()
         }
 
-        if(regDrop === 'CA'){
+        if (regDrop === 'CA') {
             await factoryReg.linking2()
         }
 
-        if(regDrop === 'CY'){
+        if (regDrop === 'CY') {
             await factoryReg.linking3()
-          
+
         }
-        if(regDrop === 'CL'){
+        if (regDrop === 'CL') {
             await factoryReg.linking1()
         }
 
         res.redirect('/')
     }
 
-   async function resets(req,res){
+    async function resets(req, res) {
 
-            await factoryReg.resetBtn()
-            req.flash('error2', 'The Data Has Been Deleted')
-            
+
         res.redirect('/')
     }
 

@@ -26,15 +26,20 @@
           style="width:300px;height:35px;font-size: larger;" placeholder="e.g CA 475-674 or CA 123"><br>
         <div style="padding: 1em;">
           <button id="button" type="submit" class="button-primary addBtn" style="width:106px;">Add</button>
+          <button id="button" type="submit" class="button-primary resetBtn" value="reset" name="but">Reset
+            Registrations</button>
+
         </div>
-
-      </div>
-
     </form>
 
     <form action="/filter" method="POST">
 
+
+
       <div class="dropdown">
+
+           
+
         <select id="regMy" name="myReg">
           <option value="" name='regTowns'>Show All</option>
           <option value="CA" name='regTowns'>Cape Town</option>
@@ -42,17 +47,12 @@
           <option value="CL" name='regTowns'>Stellenbosch</option>
         </select>
 
-      </div>
-      <div style="padding: 1em;">
         <button id="button" type="submit" class="button-primary showBtn">Show Registration</button>
 
+      
       </div>
 
-    </form>
 
-    <form action="/reset" method="post">
-      <button id="button" type="submit" class="button-primary resetBtn" value="reset" name="but" >Reset
-        Registrations</button>
     </form>
 
     <section id="regShow">
