@@ -14,69 +14,70 @@ module.exports = function regRoute(factoryReg) {
 
 
     async function postData(req, res) {
-        if (req.body.but === 'reset') {
+        if(req.body.but === 'reset'){
             await factoryReg.resetBtn()
             req.flash('error2', 'The Data Has Been Deleted')
-
+            
         }
-        else {
+        else{
+     
+        await factoryReg.stored(req.body.town)
 
-            await factoryReg.stored(req.body.town)
+       var dup = await factoryReg.duplicates();
 
-            var dup = await factoryReg.duplicates();
-
-            var reg = req.body.town
-            var myTest = regex.test(reg);
-            if (reg.length <= 10 && myTest == false) {
-                if (reg.startsWith('ca ') || reg.startsWith('cy ') || reg.startsWith('cl ') || reg.startsWith('CA ') || reg.startsWith('CY ') || reg.startsWith('CL ')) {
-                    if (dup >= 1) {
-                        req.flash('error', 'Already Been Added')
-                    }
-                    else {
-                        req.flash('error2', 'Added The Registration')
-                    }
-                }
-                else {
-                    req.flash('error', 'Enter A Correct Location')
-                }
+        var reg = req.body.town
+        var myTest = regex.test(reg);
+        if (reg.length <= 10 && myTest == false) {
+            if (reg.startsWith('ca ') || reg.startsWith('cy ') || reg.startsWith('cl ') || reg.startsWith('CA ') || reg.startsWith('CY ') || reg.startsWith('CL ')) {
+                if(dup >=1){
+                    req.flash('error','Already Been Added')
             }
-
-            if (myTest == true) {
-                req.flash('error', 'Registration Number Is Not Valid')
+            else{
+                req.flash('error2', 'Added The Registration')
             }
+        }
+        else{
+            req.flash('error', 'Enter A Correct Location')
+        }
+    }
+    
+        if (myTest == true) {
+            req.flash('error', 'Registration Number Is Not Valid')
+        }
 
-            if (reg.length <= 0) {
-                req.flash('error', 'Please Enter A Registration Number')
-
-            }
+        if (reg.length <= 0) {
+            req.flash('error', 'Please Enter A Registration Number')
+    
+    }
         }
         res.redirect('/')
     }
-    async function filts(req, res) {
+   async function filts(req, res) {
+
 
 
         regDrop = req.body.myReg
 
-        if (regDrop === '') {
-            await factoryReg.checking()
+        if(regDrop === ''){
+            await factoryReg.finalTable()
         }
 
-        if (regDrop === 'CA') {
-            await factoryReg.linking2()
+        if(regDrop === 'CA'){
+            await factoryReg.capeTown()
         }
 
-        if (regDrop === 'CY') {
-            await factoryReg.linking3()
-
+        if(regDrop === 'CY'){
+            await factoryReg.bellVille()
+          
         }
-        if (regDrop === 'CL') {
-            await factoryReg.linking1()
+        if(regDrop === 'CL'){
+            await factoryReg.stellenbosch()
         }
 
         res.redirect('/')
     }
 
-    async function resets(req, res) {
+   async function resets(req,res){
 
 
         res.redirect('/')

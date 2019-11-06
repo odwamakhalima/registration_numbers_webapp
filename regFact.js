@@ -4,9 +4,9 @@ module.exports = function regFact(pool) {
     var error = ''
     var regex = /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
     var check;
-    var linkTables1;
-    var linkTables2;
-    var linkTables3;
+    var stelReg;
+    var capeReg;
+    var bellReg;
     var store;
 
     function newObj() {
@@ -29,19 +29,19 @@ module.exports = function regFact(pool) {
 
                     if (reg2.startsWith('CL ')) {
                         await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 3]);
-                        linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
+                        stelReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
 
                     }
 
                     if (reg2.startsWith('CA ')) {
                         await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
-                        linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
+                        capeReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
 
                     }
 
                     if (reg2.startsWith('CY ')) {
                         await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
-                        linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
+                        bellReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
 
                     }
                 }
@@ -49,20 +49,20 @@ module.exports = function regFact(pool) {
         }
     }
 
-    async function linking1() {
-        linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
-        final = linkTables1.rows
+    async function stellenbosch() {
+        stelReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
+        final = stelReg.rows
     }
 
-    async function linking2() {
-        linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
-        final = linkTables2.rows
+    async function capeTown() {
+        capeReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
+        final = capeReg.rows
 
     }
 
-    async function linking3() {
-        linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
-        final = linkTables3.rows
+    async function bellVille() {
+        bellReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
+        final = bellReg.rows
 
     }
 
@@ -70,7 +70,7 @@ module.exports = function regFact(pool) {
         return store.rowCount
     }
 
-    async function checking() {
+    async function finalTable() {
         check = await pool.query('select distinct description, mytowns_id from myregnumbers')
         final = check.rows
     }
@@ -90,10 +90,10 @@ module.exports = function regFact(pool) {
         stored,
         resetBtn,
         newObj,
-        checking,
-        linking1,
-        linking2,
-        linking3,
+        finalTable,
+        stellenbosch,
+        capeTown,
+        bellVille,
         duplicates,
         finalResults
     }
