@@ -26,9 +26,13 @@ describe('The basic database web app', function () {
         await factoryReg.stored('CY 868734')
         await factoryReg.stored('CL 127534')
 
-        assert.deepEqual(await factoryReg.linking1(),[ { description: 'CL 127534' } ])
-        assert.deepEqual(await factoryReg.linking2(),[ { description: 'CA 8734' } ])
-        assert.deepEqual(await factoryReg.linking3(),[ { description: 'CY 868734' } ])
+        // await factoryReg.linking1()
+        // await factoryReg.linking2()
+        // await factoryReg.linking3()
+
+        assert.deepEqual(await factoryReg.finalResults(),[ { description: 'CY 868734' } ])
+     //   assert.deepEqual(await factoryReg.finalResults(),[ { description: 'CY 868734' } ])
+
 
     });
 

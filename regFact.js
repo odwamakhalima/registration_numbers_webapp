@@ -21,32 +21,32 @@ module.exports = function regFact(pool) {
             if (reg2.startsWith('CA ') || reg2.startsWith('CY ') || reg2.startsWith('CL ')) {
                 store = await pool.query('select * from myregnumbers WHERE description = $1', [reg2])
 
-if(store.rows.length === 0){
-                if (regList[reg2] === undefined) {
-                    regList[reg2] = 0;
-                    check = await pool.query('select distinct description, mytowns_id from myregnumbers')
-                }
+                if (store.rows.length === 0) {
+                    if (regList[reg2] === undefined) {
+                        regList[reg2] = 0;
+                        check = await pool.query('select distinct description, mytowns_id from myregnumbers')
+                    }
 
-                if (reg2.startsWith('CL ')) {
-                    await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 3]);
-                    linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
+                    if (reg2.startsWith('CL ')) {
+                        await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 3]);
+                        linkTables1 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
 
-                }
+                    }
 
-                if (reg2.startsWith('CA ')) {
-                    await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
-                    linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
+                    if (reg2.startsWith('CA ')) {
+                        await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 1]);
+                        linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
 
-                }
+                    }
 
-                if (reg2.startsWith('CY ')) {
-                    await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
-                    linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
+                    if (reg2.startsWith('CY ')) {
+                        await pool.query('insert into myregnumbers (description, mytowns_id) values ($1, $2)', [reg2, 2]);
+                        linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
 
+                    }
                 }
             }
         }
-    }
     }
 
     async function linking1() {
@@ -57,13 +57,13 @@ if(store.rows.length === 0){
     async function linking2() {
         linkTables2 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
         final = linkTables2.rows
-        
+
     }
 
     async function linking3() {
         linkTables3 = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
         final = linkTables3.rows
-        
+
     }
 
     async function duplicates() {
@@ -76,26 +76,17 @@ if(store.rows.length === 0){
     }
 
     async function finalResults() {
-     
-        
         return final
     }
 
-    function theReg(first) {
-        var theRegs = Object.keys(regList)
-        var myObj = {}
-        for (var i = 0; i < theRegs.length; i++) {
-            if (theRegs[i].startsWith(first)) {
-                myObj[theRegs[i]] = 0;
-            }
-        }
-        return (myObj)
-
+    async function resetBtn() {
+        var restart = await pool.query('delete from myregnumbers')
+        return restart
     }
 
     return {
         stored,
-        theReg,
+        resetBtn,
         newObj,
         checking,
         linking1,

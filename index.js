@@ -48,7 +48,7 @@ app.post('/reg_numbers/', routingFact.postData)
 
 app.post('/filter', routingFact.filts)
 
-// app.post('/reset', routingFact.resets)
+app.post('/reset', routingFact.resets)
 
 
 var PORT = process.env.PORT || 5048

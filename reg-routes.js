@@ -10,7 +10,6 @@ module.exports = function regRoute(factoryReg) {
 
         res.render('index', {
             show: await factoryReg.finalResults(),
-
         })
     }
 
@@ -69,17 +68,13 @@ module.exports = function regRoute(factoryReg) {
             await factoryReg.linking1()
         }
 
-        // regtown = Object.keys(factoryReg.theReg(regDrop));
-        // for (var i = 0; i < regtown.length; i++) {
-        //     finale = regtown[i]
-        // }
-
         res.redirect('/')
     }
 
    async function resets(req,res){
        
             await factoryReg.resetBtn()
+            req.flash('error2', 'The Data Has Been Deleted')
         
         res.redirect('/')
     }
