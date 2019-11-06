@@ -3,7 +3,6 @@ module.exports = function regRoute(factoryReg) {
 
 
     var regex = /[!@#$%^&*();,.?"^$:^+=${'}`_;''"\[.*?\]|<>]/g
-   
     var regDrop
 
     async function indexs(req, res) {
@@ -72,10 +71,10 @@ module.exports = function regRoute(factoryReg) {
     }
 
    async function resets(req,res){
-       
+
             await factoryReg.resetBtn()
             req.flash('error2', 'The Data Has Been Deleted')
-        
+            
         res.redirect('/')
     }
 
