@@ -54,25 +54,9 @@ module.exports = function regRoute(factoryReg) {
     }
    async function filts(req, res) {
 
-
-
         regDrop = req.body.myReg
-
-        if(regDrop === ''){
-            await factoryReg.finalTable()
-        }
-
-        if(regDrop === 'CA'){
-            await factoryReg.capeTown()
-        }
-
-        if(regDrop === 'CY'){
-            await factoryReg.bellVille()
-          
-        }
-        if(regDrop === 'CL'){
-            await factoryReg.stellenbosch()
-        }
+        
+        factoryReg.filtering(regDrop)
 
         res.redirect('/')
     }

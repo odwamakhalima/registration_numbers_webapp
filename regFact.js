@@ -49,31 +49,33 @@ module.exports = function regFact(pool) {
         }
     }
 
-    async function stellenbosch() {
-        stelReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
-        final = stelReg.rows
-    }
+    async function filtering(town){
 
-    async function capeTown() {
-        capeReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
-        final = capeReg.rows
+        if(town === ''){
+            check = await pool.query('select distinct description, mytowns_id from myregnumbers')
+            final = check.rows
+        }
 
-    }
+        if(town === 'CA'){
+            capeReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 1;')
+            final = capeReg.rows
+        }
 
-    async function bellVille() {
-        bellReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
-        final = bellReg.rows
-
+        if(town === 'CY'){
+            bellReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 2;')
+            final = bellReg.rows
+          
+        }
+        if(town === 'CL'){
+            stelReg = await pool.query('SELECT mytowns.description, myregnumbers.description FROM mytowns INNER JOIN myregnumbers ON mytowns.id = myregnumbers.mytowns_id WHERE mytowns.id = 3;')
+            final = stelReg.rows
+        }
     }
 
     async function duplicates() {
         return store.rowCount
     }
 
-    async function finalTable() {
-        check = await pool.query('select distinct description, mytowns_id from myregnumbers')
-        final = check.rows
-    }
 
     async function finalResults() {
         return final
@@ -83,19 +85,16 @@ module.exports = function regFact(pool) {
         final = []
         var restart = await pool.query('delete from myregnumbers')
         return restart
-        
+
     }
 
     return {
         stored,
         resetBtn,
         newObj,
-        finalTable,
-        stellenbosch,
-        capeTown,
-        bellVille,
         duplicates,
-        finalResults
+        finalResults,
+        filtering
     }
 }
 
